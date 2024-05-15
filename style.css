@@ -173,7 +173,7 @@ body::before {
     display: inline-block;
     margin: 0 15px;
     color: white; /* make icons readable */
-    font-size: 4rem; /* Make icons bigger */
+    font-size: 3.5rem; /* Make icons bigger */
   }
   
   /* Form styles */
