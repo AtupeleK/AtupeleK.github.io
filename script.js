@@ -40,32 +40,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
   });
 
-  // Event listener for form submission
-  document.getElementById('contact-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent default form submission
+  // Form submission handling
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbxW9o5L5bj1LuF1OdUPA5MnUUWj5OR0ZONz3Ok66lXlrt6xhNDM-6qSh-VboBaE7Md05Q/exec';
+  const form = document.forms['contact-form'];
 
-    // Serialize form data
-    const formData = new FormData(this);
-
-    // Send form data to Google Apps Script web app
-    fetch('https://script.google.com/macros/s/AKfycbxW9o5L5bj1LuF1OdUPA5MnUUWj5OR0ZONz3Ok66lXlrt6xhNDM-6qSh-VboBaE7Md05Q/exec', {
-      method: 'POST',
-      body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.result === 'success') {
-        // Show success message on the form page
-        document.getElementById('form-message').textContent = 'Form submitted successfully!';
-      } else {
-        // Show error message on the form page
-        document.getElementById('form-message').textContent = 'Error submitting form. Please try again later.';
-      }
-    })
-    .catch(error => {
-      // Show error message on the form page
-      document.getElementById('form-message').textContent = 'An unexpected error occurred. Please try again later.';
-      console.error('Error:', error);
-    });
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+      .then(response => {
+        alert("Thank you! Your form has been submitted successfully.");
+        form.reset(); // Reset the form after successful submission
+      })
+      .catch(error => console.error('Error!', error.message));
   });
 });
